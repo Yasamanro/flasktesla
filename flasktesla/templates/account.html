@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="content-section">
+		<div class="media">
+	    	<img src="{{ image_file }}" style="margin-right: 80px">
+	    	<div class="media-body" style="margin-left: 20px">
+	      		<h3 class="account-heading">{{ current_user.username }}'s Model 3</h3>
+	      		<p class="text-secondary">{{ current_user.email }}</p>
+	      		<p class="text-secondary">Total Distance Travelled: </p>
+	      		<p class="text-secondary">Charge Cycles: </p>
+	      		<p class="text-secondary">Next Expected Maintenance: </p>
+	    	</div>
+	  	</div>
+
+	  	<div id="mini-badge" class="">
+	  		{% if current_user.speed_score >=10 and current_user.speed_score <= 20 %}
+	  			<img src="{{ url_for('static', filename='images/speed_bronze.png') }}">
+			{% elif current_user.speed_score > 20 and current_user.speed_score <= 30 %}
+	  			<img src="{{ url_for('static', filename='images/speed_silver.png') }}">
+	  		{% elif current_user.speed_score > 30 %}
+	  			<img src="{{ url_for('static', filename='images/speed_gold.png') }}">
+	  		{% endif %}
+
+	  		{% if current_user.drift_score >=10 and current_user.drift_score <= 20 %}
+	  			<img src="{{ url_for('static', filename='images/drift_bronze.png') }}">
+			{% elif current_user.drift_score > 20 and current_user.drift_score <= 30 %}
+	  			<img src="{{ url_for('static', filename='images/drift_silver.png') }}">
+	  		{% elif current_user.drift_score > 30 %}
+	  			<img src="{{ url_for('static', filename='images/drift_gold.png') }}">
+	  		{% endif %}
+
+	  		{% if current_user.weave_score >=10 and current_user.weave_score <= 20 %}
+	  			<img src="{{ url_for('static', filename='images/weave_bronze.png') }}">
+			{% elif current_user.weave_score > 20 and current_user.weave_score <= 30 %}
+	  			<img src="{{ url_for('static', filename='images/weave_silver.png') }}">
+	  		{% elif current_user.weave_score > 30 %}
+	  			<img src="{{ url_for('static', filename='images/weave_gold.png') }}">
+	  		{% endif %}
+
+	  		{% if current_user.community_score >=10 and current_user.community_score <= 20 %}
+	  			<img src="{{ url_for('static', filename='images/community_bronze.png') }}">
+			{% elif current_user.community_score > 20 and current_user.community_score <= 30 %}
+	  			<img src="{{ url_for('static', filename='images/community_silver.png') }}">
+	  		{% elif current_user.community_score > 30 %}
+	  			<img src="{{ url_for('static', filename='images/community_gold.png') }}">
+	  		{% endif %}
+	  	</div>
+
+		<div class="tab">
+		  <button class="tablinks" onclick="openMetric(event, 'Journeys')">Your Journeys</button>
+		  <button class="tablinks" onclick="openMetric(event, 'Performance')">Driving Performance</button>
+		  <button class="tablinks" onclick="openMetric(event, 'Badges')">Badges</button>
+		</div>
+
+		<div id="Journeys" class="tabcontent">
+			<h3>Your Journeys</h3>
+			<div class="tab">
+		  		<button class="tablinks" onclick="openMetric(event, 'Week')">Week</button>
+		  		<button class="tablinks" onclick="openMetric(event, 'Month')">Month</button>
+		  		<button class="tablinks" onclick="openMetric(event, 'Year')">Year</button>
+		  	</div>
+
+		  	<div id="Week" class="tabcontent">
+		  		<h3>This Week</h3>
+		  	</div>
+
+		  	<div id="Month" class="tabcontent">
+		  		<h3>This Month</h3>
+		  	</div>
+
+		  	<div id="Week" class="tabcontent">
+		  		<h3>This Year</h3>
+		  	</div>
+		</div>
+		  
+		<!-- Performance -->
+		<div id="Performance" class="tabcontent">
+			<h3>Driving Performance</h3>
+			<div class="row">
+  				<div class="col">Start Date:<input type="date" name="start" max="1979-12-31"><br></div>
+  				<div class="col">End Date:<input type="date" name="end" max="2000-01-02"><br></div>
+  				<input type="submit"> 
+			</div>
+
+		  	<div class="dropdown">
+  				<button class="dropbtn">Metric</button>
+  				<div class="dropdown-content">
+    				<a href="#">Percentage Over Speed Limit</a>
+    				<a href="#">Weaving Score</a>
+    				<a href="#">Drifting Score</a>
+  				</div>
+			</div>
+		</div>
+
+		<!-- Badges -->
+		<div id="Badges" class="tabcontent">
+		  <h4>Completed Badges</h4></br>
+		  {% if current_user.speed_score == 0 %}
+		  		<div class="row" style="margin-right: auto; margin-left: auto">
+		  			<div class="col-md-6" style="background: #323A43">
+		  				<div class="col-md-12" style="background: #505A65">
+		  					salam olaghe aziz
+		  				</div>
+		  			</div>
+		  			<div class="col-md-6" style="background: green">salam
+		  				<div class="col-md-12" style="background: #505A65">
+		  					salam olaghe aziz
+		  				</div>
+		  			</div>
+		  		</div>
+		  {% endif %}
+		  <h4>Remaining Badges</h4>
+		  <h4>Community Badges</h4>
+		</div>
+
+		<script>
+		function openMetric(evt, metric) {
+		  var i, tabcontent, tablinks;
+		  tabcontent = document.getElementsByClassName("tabcontent");
+		  for (i = 0; i < tabcontent.length; i++) {
+		    tabcontent[i].style.display = "none";
+		  }
+		  tablinks = document.getElementsByClassName("tablinks");
+		  for (i = 0; i < tablinks.length; i++) {
+		    tablinks[i].className = tablinks[i].className.replace(" active", "");
+		  }
+		  document.getElementById(metric).style.display = "block";
+		  evt.currentTarget.className += " active";
+		}
+		</script>
+{% endblock content %}
