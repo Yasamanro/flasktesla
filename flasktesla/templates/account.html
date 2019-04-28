@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 	<div class="content-section">
-		<div class="media">
+		<div class="media" style="padding-bottom: 40px">
 	    	<img src="{{ image_file }}" style="margin-right: 80px">
 	    	<div class="media-body" style="margin-left: 20px">
 	      		<h3 class="account-heading">{{ current_user.username }}'s Model 3</h3>
@@ -9,123 +9,259 @@
 	      		<p class="text-secondary">Total Distance Travelled: </p>
 	      		<p class="text-secondary">Charge Cycles: </p>
 	      		<p class="text-secondary">Next Expected Maintenance: </p>
+	  			{% for i in range (0, completed_badges|length) %}
+	  				<img style="width: 10%" src="{{ url_for('static', filename='images/' + completed_badges[i].filename) }}">
+	  			{% endfor %}
 	    	</div>
 	  	</div>
 
-	  	<div id="mini-badge" class="">
-	  		{% if current_user.speed_score >=10 and current_user.speed_score <= 20 %}
-	  			<img src="{{ url_for('static', filename='images/speed_bronze.png') }}">
-			{% elif current_user.speed_score > 20 and current_user.speed_score <= 30 %}
-	  			<img src="{{ url_for('static', filename='images/speed_silver.png') }}">
-	  		{% elif current_user.speed_score > 30 %}
-	  			<img src="{{ url_for('static', filename='images/speed_gold.png') }}">
-	  		{% endif %}
-
-	  		{% if current_user.drift_score >=10 and current_user.drift_score <= 20 %}
-	  			<img src="{{ url_for('static', filename='images/drift_bronze.png') }}">
-			{% elif current_user.drift_score > 20 and current_user.drift_score <= 30 %}
-	  			<img src="{{ url_for('static', filename='images/drift_silver.png') }}">
-	  		{% elif current_user.drift_score > 30 %}
-	  			<img src="{{ url_for('static', filename='images/drift_gold.png') }}">
-	  		{% endif %}
-
-	  		{% if current_user.weave_score >=10 and current_user.weave_score <= 20 %}
-	  			<img src="{{ url_for('static', filename='images/weave_bronze.png') }}">
-			{% elif current_user.weave_score > 20 and current_user.weave_score <= 30 %}
-	  			<img src="{{ url_for('static', filename='images/weave_silver.png') }}">
-	  		{% elif current_user.weave_score > 30 %}
-	  			<img src="{{ url_for('static', filename='images/weave_gold.png') }}">
-	  		{% endif %}
-
-	  		{% if current_user.community_score >=10 and current_user.community_score <= 20 %}
-	  			<img src="{{ url_for('static', filename='images/community_bronze.png') }}">
-			{% elif current_user.community_score > 20 and current_user.community_score <= 30 %}
-	  			<img src="{{ url_for('static', filename='images/community_silver.png') }}">
-	  		{% elif current_user.community_score > 30 %}
-	  			<img src="{{ url_for('static', filename='images/community_gold.png') }}">
-	  		{% endif %}
-	  	</div>
-
 		<div class="tab">
-		  <button class="tablinks" onclick="openMetric(event, 'Journeys')">Your Journeys</button>
-		  <button class="tablinks" onclick="openMetric(event, 'Performance')">Driving Performance</button>
-		  <button class="tablinks" onclick="openMetric(event, 'Badges')">Badges</button>
+		  <button class="tablinks parent-links" onclick="openMetric(event, 'Journeys', 'parent-content', 'parent-links')">Your Journeys</button>
+		  <button class="tablinks parent-links" onclick="openMetric(event, 'Performance', 'parent-content', 'parent-links')">Driving Performance</button>
+		  <button class="tablinks parent-links" onclick="openMetric(event, 'Badges', 'parent-content', 'parent-links')">Badges</button>
 		</div>
 
-		<div id="Journeys" class="tabcontent">
-			<h3>Your Journeys</h3>
+		<div id="Journeys" class="tabcontent parent-content" style="padding-top: 15px">
+			<h4>Your Journeys</h4></br>
 			<div class="tab">
-		  		<button class="tablinks" onclick="openMetric(event, 'Week')">Week</button>
-		  		<button class="tablinks" onclick="openMetric(event, 'Month')">Month</button>
-		  		<button class="tablinks" onclick="openMetric(event, 'Year')">Year</button>
+		  		<button class="tablinks child-links" onclick="openMetric(event, 'Day', 'child-content','child-links')">Day</button>
+		  		<button class="tablinks child-links" onclick="openMetric(event, 'Week', 'child-content','child-links')">Week</button>
+		  		<button class="tablinks child-links" onclick="openMetric(event, 'Month', 'child-content','child-links')">Month</button>
 		  	</div>
 
-		  	<div id="Week" class="tabcontent">
+		  	<div id="Day" class="tabcontent child-content">
+		  		<h3>This Day</h3>
+		  		{% for i in range(0, day_rides|length) %}
+			  		<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-lg-12" style="background: #505A65;padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding: 15px">	<!-- Day Rides -->
+		  						<h5>Journey #{{day_rides[i].id}}</h5>
+		  					</div>
+		  					<div class="col-md-12" style="background: #505A65;padding: 15px">
+		  						<!-- MAP to be implemented -->
+		  					</div>
+		  				</div>
+			  		</div>
+		  		{% endfor %}
+		  	</div>
+
+		  	<div id="Week" class="tabcontent child-content">
 		  		<h3>This Week</h3>
+		  		{% for i in range(0, week_rides|length) %}
+			  		<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-lg-12" style="background: #505A65;padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding: 15px">	<!-- Week Rides -->
+		  						<h5>Journey #{{week_rides[i].id}}</h5>
+		  					</div>
+		  					<div class="col-md-12" style="background: #505A65;padding: 15px">
+		  						<!-- MAP to be implemented -->
+		  					</div>
+		  				</div>
+			  		</div>
+		  		{% endfor %}
 		  	</div>
 
-		  	<div id="Month" class="tabcontent">
+		  	<div id="Month" class="tabcontent child-content">
 		  		<h3>This Month</h3>
-		  	</div>
-
-		  	<div id="Week" class="tabcontent">
-		  		<h3>This Year</h3>
+		  		{% for i in range(0, month_rides|length) %}
+			  		<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-lg-12" style="background: #505A65;padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding: 15px">	<!-- Week Rides -->
+		  						<h5>Journey #{{month_rides[i].id}}</h5>
+		  					</div>
+		  					<div class="col-md-12" style="background: #505A65;padding: 15px">
+		  						<!-- MAP to be implemented -->
+		  					</div>
+		  				</div>
+			  		</div>
+		  		{% endfor %}
 		  	</div>
 		</div>
 		  
 		<!-- Performance -->
-		<div id="Performance" class="tabcontent">
-			<h3>Driving Performance</h3>
+		<div id="Performance" class="tabcontent parent-content" style="padding-top: 15px">
+			<h4>Driving Performance</h4></br>
 			<div class="row">
-  				<div class="col">Start Date:<input type="date" name="start" max="1979-12-31"><br></div>
-  				<div class="col">End Date:<input type="date" name="end" max="2000-01-02"><br></div>
-  				<input type="submit"> 
+  				<div class="col" style="display:inline-block">Start Date: <input type="date" name="start" id ="start_date" value="2019-04-20"><br></div>
+  				<div class="col" style="display:inline-block">End Date: <input type="date" name="end" id ="end_date" value="2019-04-29"><br></div>
+  			</div>
+  			<div class="row col" style="padding-top: 30px;padding-bottom: 20px">
+  				<p>Select Metric: </p>
+				<div class="radio">
+					<label class="radio"><input type="radio" id ="speed" name="optradio" checked>     Percentage Over Speed Limit </label>
+				</div>
+				<div class="radio">
+					<label class="radio"><input type="radio" id ="weave" name="optradio"> Weaving Score </label>
+				</div>
+				<label class="radio"><input type="radio" id ="drift" name="optradio"> Drifting Score </label>
+				<button type="button" style="margin-left: 50px;float: right" onclick="updateGraph()">Draw Graph</button> 
 			</div>
-
-		  	<div class="dropdown">
-  				<button class="dropbtn">Metric</button>
-  				<div class="dropdown-content">
-    				<a href="#">Percentage Over Speed Limit</a>
-    				<a href="#">Weaving Score</a>
-    				<a href="#">Drifting Score</a>
+			<div class="row">
+  				<div id="khar" style="margin-left: auto; margin-right: auto;">
+  					<canvas id="myChart" width="600" height="400"></canvas>
   				</div>
 			</div>
 		</div>
 
 		<!-- Badges -->
-		<div id="Badges" class="tabcontent">
-		  <h4>Completed Badges</h4></br>
-		  {% if current_user.speed_score == 0 %}
-		  		<div class="row" style="margin-right: auto; margin-left: auto">
-		  			<div class="col-md-6" style="background: #323A43">
-		  				<div class="col-md-12" style="background: #505A65">
-		  					salam olaghe aziz
+		<div id="Badges" class="tabcontent parent-content" style="padding-top: 15px">
+			<h4>Completed Badges</h4></br>
+			{% for i in range(0, completed_badges|length, 2) %}
+				{% if i + 1 < completed_badges|length %}
+					<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-md-6" style="background: #323A43" style="padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding-bottom: 15px">
+		  						<img style="width: 25%; display: block; margin-left: auto; margin-right: auto;padding-top: 15px" src="{{ url_for('static', filename='images/' + completed_badges[i].filename) }}">
+		  						{{ completed_badges[i].text }}
+		  					</div>
+		  				</div>
+		  				<div class="col-md-6" style="background: #323A43" style="padding: 15px;padding-bottom: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding-bottom: 15px">
+		  						<img style="width: 25%; display: block; margin-left: auto; margin-right: auto;padding-top: 15px" src="{{ url_for('static', filename='images/' + completed_badges[i+1].filename) }}">
+		  						{{ completed_badges[i+1].text }}
+		  					</div>
+		  				</div>
+	  				</div>
+				{% else %}
+					<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-md-6" style="background: #323A43" style="padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding-bottom: 15px">
+		  						<img style="width: 25; display: block; margin-left: auto; margin-right: auto;padding-top: 15px" src="{{ url_for('static', filename='images/' + completed_badges[i].filename) }}">
+		  						{{ completed_badges[i].text }}	
+		  					</div>
 		  				</div>
 		  			</div>
-		  			<div class="col-md-6" style="background: green">salam
-		  				<div class="col-md-12" style="background: #505A65">
-		  					salam olaghe aziz
+				{% endif %}
+			{% endfor %}
+		  	<h4>Remaining Badges</h4></br>
+		  	{% for i in range(0, remaining_badges|length, 2) %}
+				{% if i + 1 < remaining_badges|length %}
+					<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-md-6" style="background: #323A43" style="padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding-bottom: 15px">
+		  						<img style="width: 25%; display: block; margin-left: auto; margin-right: auto;padding-top: 15px" src="{{ url_for('static', filename='images/' + remaining_badges[i].filename) }}">
+		  						{{ remaining_badges[i].text }}
+		  						<div class="progress">
+		  							<div class="progress-bar" role="progressbar" aria-valuenow="{{ remaining_badges[i].get_corresponding_attr(current_user) }}" aria-valuemin="0" aria-valuemax="{{ remaining_badges[i].max_score }}" style="width: {{ remaining_badges[i].get_corresponding_attr(current_user) }}%">
+		  							</div>
+		  						</div>{{ remaining_badges[i].get_corresponding_attr(current_user) }} / {{ remaining_badges[i].max_score }}
+		  					</div>
+		  				</div>
+		  				<div class="col-md-6" style="background: #323A43" style="padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding-bottom: 15px">
+		  						<img style="width: 25%; display: block; margin-left: auto; margin-right: auto;padding-top: 15px" src="{{ url_for('static', filename='images/' + remaining_badges[i+1].filename) }}">
+		  						{{ remaining_badges[i+1].text }}
+		  						<div class="progress">
+		  							<div class="progress-bar" role="progressbar" aria-valuenow="{{ remaining_badges[i+1].get_corresponding_attr(current_user) }}" aria-valuemin="0" aria-valuemax="{{ remaining_badges[i+1].max_score }}" style="width: {{ remaining_badges[i+1].get_corresponding_attr(current_user) }}%">
+		  							</div>
+		  						</div>{{ remaining_badges[i+1].get_corresponding_attr(current_user) }} / {{ remaining_badges[i+1].max_score }}
+		  					</div>
+		  				</div>
+	  				</div>
+				{% else %}
+					<div class="row" style="margin-right: auto; margin-left: auto;padding-bottom: 30px">
+		  				<div class="col-md-6" style="background: #323A43" style="padding: 15px">
+		  					<div class="col-md-12" style="background: #505A65; text-align: center;padding-bottom: 15px">
+		  						<img style="width: 25%; display: block; margin-left: auto; margin-right: auto;padding-top: 15px" src="{{ url_for('static', filename='images/' + remaining_badges[i].filename) }}">
+		  						{{ remaining_badges[i].text }}
+		  						<div class="progress">
+		  							<div class="progress-bar" role="progressbar" aria-valuenow="{{ remaining_badges[i].get_corresponding_attr(current_user) }}" aria-valuemin="0" aria-valuemax="{{ remaining_badges[i].max_score }}" style="width: {{ remaining_badges[i].get_corresponding_attr(current_user) }}%">
+		  							</div>
+		  						</div>{{ remaining_badges[i].get_corresponding_attr(current_user) }} / {{ remaining_badges[i].max_score }}
+		  					</div>
 		  				</div>
 		  			</div>
-		  		</div>
-		  {% endif %}
-		  <h4>Remaining Badges</h4>
-		  <h4>Community Badges</h4>
+				{% endif %}
+			{% endfor %}
 		</div>
 
 		<script>
-		function openMetric(evt, metric) {
-		  var i, tabcontent, tablinks;
-		  tabcontent = document.getElementsByClassName("tabcontent");
-		  for (i = 0; i < tabcontent.length; i++) {
-		    tabcontent[i].style.display = "none";
-		  }
-		  tablinks = document.getElementsByClassName("tablinks");
-		  for (i = 0; i < tablinks.length; i++) {
-		    tablinks[i].className = tablinks[i].className.replace(" active", "");
-		  }
-		  document.getElementById(metric).style.display = "block";
-		  evt.currentTarget.className += " active";
+		function openMetric(evt, metric, content ,link) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName(content);
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName(link);
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(metric).style.display = "block";
+			evt.currentTarget.className += " active";
 		}
+
+		// Update graph function which is called on the correct elements being changed
+		function updateGraph() {
+  			var xhttp = new XMLHttpRequest();					// Creates an XMLHttpRequest object
+  			xhttp.onreadystatechange = function() {				// Function to be executed everytime the status of XMLHttpRequest object changes
+    			if (this.readyState == 4 && this.status == 200) {
+
+    				// Parse response into json (JSON.parse) and deal with it
+    				parsed = JSON.parse(this.responseText);
+    				driver_data = parsed["driver_data"];
+    				community_data = parsed["community_data"];
+
+    				// draw graph
+    				if (document.getElementById('speed').checked){
+    					  // document.getElementById("khar").textContent = this.community_data;
+    				} else if (document.getElementById('weave').checked){
+    					// document.getElementById("khar").textContent = "weave";
+    												
+						// Our labels along the x-axis
+						var years = [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050];
+						// For drawing the lines
+						var asia = [282,350,411,502,635,809,947,1402,3700,5267];
+						var europe = [168,170,178,190,203,276,408,547,675,734];
+
+						var ctx = document.getElementById("myChart");
+						var myChart = new Chart(ctx, {
+						  type: 'line',
+						  data: {
+						    labels: years,
+						    datasets: [
+						      { 
+						        data: asia,
+						        label: "Asia",
+						        borderColor: "#8e5ea2",
+						        fill: false
+						      },
+						      { 
+						        data: europe,
+						        label: "Europe",
+						        borderColor: "#3cba9f",
+						        fill: false
+						      }
+						    ]
+						  }
+						});
+
+    				} else if (document.getElementById('drift').checked){
+    					// document.getElementById("khar").textContent = "drift";
+    				}
+    			}
+			};
+
+			// create request data from json: JSON.stringify
+			var time_zero = ' 00:00:00.0';
+			var start_date = $('#start_date').val();
+			var end_date = $('#end_date').val();
+			start_date = start_date + time_zero;
+			end_date = end_date + time_zero;
+
+			sampleRequest = {
+				'start_date': start_date,
+				'end_date': end_date,
+			};
+
+			console.log(sampleRequest);
+			sampleReuqestPayload = JSON.stringify(sampleRequest);
+			xhttp.open("POST", '/processjson', true);
+			xhttp.setRequestHeader("Content-Type", "application/json");
+			xhttp.send(sampleReuqestPayload);
+		}
+
 		</script>
 {% endblock content %}
+
+
+

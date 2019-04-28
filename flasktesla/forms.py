@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, FloatField, IntegerField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flasktesla.models import User
 
@@ -27,3 +28,15 @@ class LoginForm(FlaskForm):
 	password = PasswordField('Password',validators=[DataRequired()])
 	remember = BooleanField('Remember Me')
 	submit = SubmitField('Login')
+
+
+class RideForm(FlaskForm):
+	date_of_ride = DateField('Date of Ride ', format='%Y-%m-%d', validators=[DataRequired()])
+	start_lat = FloatField('Start Latitude' , validators=[DataRequired()])
+	start_lng = FloatField('Start Longitude' , validators=[DataRequired()])
+	end_lat = FloatField('End Latitude' , validators=[DataRequired()])
+	end_lng = FloatField('End Longitude' , validators=[DataRequired()])
+	avg_speed = IntegerField('Average Speed ' , validators=[DataRequired()])
+	speed_limit = IntegerField('Speed Limit ' , validators=[DataRequired()])
+	submit = SubmitField('Create Ride')
+

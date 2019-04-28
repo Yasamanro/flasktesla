@@ -120,7 +120,7 @@ a.article-title:hover {
 .tabcontent {
   display: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
+  border: none;
   border-top: none;
 }
 

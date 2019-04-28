@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+	<form method="POST" action="">
+		{{ form.hidden_tag() }}
+		<fieldset class="form-group">
+			<legend class="border-bottom mb-4">New Ride</legend>
+			<div class="form-group">
+				{{ form.date_of_ride.label(class="form-control-label") }}
+				{% if form.date_of_ride.errors %}
+					{{ form.date_of_ride(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.date_of_ride.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.date_of_ride(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{ form.start_lat.label(class="form-control-label") }}
+				{% if form.start_lat.errors %}
+					{{ form.start_lat(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.start_lat.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.start_lat(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{ form.start_lng.label(class="form-control-label") }}
+				{% if form.start_lng.errors %}
+					{{ form.start_lat(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.start_lng.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.start_lng(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{ form.end_lat.label(class="form-control-label") }}
+				{% if form.end_lat.errors %}
+					{{ form.end_lat(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.end_lat.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.end_lat(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{ form.end_lng.label(class="form-control-label") }}
+				{% if form.end_lng.errors %}
+					{{ form.end_lng(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.end_lng.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.end_lng(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{ form.avg_speed.label(class="form-control-label") }}
+				{% if form.avg_speed.errors %}
+					{{ form.avg_speed(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.avg_speed.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.avg_speed(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{ form.speed_limit.label(class="form-control-label") }}
+				{% if form.speed_limit.errors %}
+					{{ form.speed_limit(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.speed_limit.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}	
+					</div>
+				{% else %}
+					{{ form.speed_limit(class="form-control form-control-lg") }}
+				{% endif %}
+			</div>
+
+		</fieldset>
+		<div class = "form-group">
+			{{ form.submit(class="btn btn-outline-info")}}
+		</div>
+	</form>
+</div>
+{% endblock content %}
