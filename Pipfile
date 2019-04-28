@@ -12,6 +12,8 @@ flask-bcrypt = "*"
 sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-wtf = "*"
+ipython = "*"
+prompt-toolkit = "*"
 
 [requires]
 python_version = "3.7"
